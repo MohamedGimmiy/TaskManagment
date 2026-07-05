@@ -50,6 +50,18 @@ namespace TaskManagment.Infrastructure.Repostories
             return null;
         }
 
+        public async Task<TaskItem?> UpdateStatus(Guid id, Domain.Models.TaskStatus status)
+        {
+            var existing = await GetById(id);
+            if (existing != null)
+            {
+                existing.Status = status;
+                await _context.SaveChangesAsync();
+                return existing;
+            }
+            return null;
+        }
+
         public async Task Delete(Guid id)
         {
             var task = await GetById(id);

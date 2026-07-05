@@ -17,6 +17,36 @@ namespace TaskManagment.Controllers
             _userRepository = userRepository;
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
+        {
+            var existing = await _userRepository.GetByEmail(request.Email);
+            if (existing != null)
+            {
+                return BadRequest("User with this email already exists.");
+            }
+
+            if (!Enum.TryParse<UserRole>(request.Role, true, out var role))
+            {
+                return BadRequest($"Invalid role. Valid values: {string.Join(", ", Enum.GetNames<UserRole>())}");
+            }
+
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = request.Name,
+                Email = request.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                Role = role,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _userRepository.Create(user);
+
+            return Ok(new { user.Id, user.Name, user.Email, user.Role, user.CreatedAt });
+        }
+
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAll()
@@ -79,6 +109,14 @@ namespace TaskManagment.Controllers
             await _userRepository.Delete(id);
             return NoContent();
         }
+    }
+
+    public class CreateUserRequest
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public string Role { get; set; } = "User";
     }
 
     public class UpdateUserRequest
