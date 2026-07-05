@@ -22,9 +22,9 @@ namespace TaskManagment.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Register([FromBody] RegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            if (_userRepository.GetByEmail(request.Email) != null)
+            if (await _userRepository.GetByEmail(request.Email) != null)
             {
                 return BadRequest("User with this email already exists");
             }
@@ -39,15 +39,15 @@ namespace TaskManagment.Controllers
                 CreatedAt = DateTime.UtcNow
             };
 
-            _userRepository.Create(user);
+            await _userRepository.Create(user);
 
             return Ok(new { message = "User registered successfully", userId = user.Id });
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var user = _userRepository.GetByEmail(request.Email);
+            var user = await _userRepository.GetByEmail(request.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
                 return Unauthorized("Invalid email or password");

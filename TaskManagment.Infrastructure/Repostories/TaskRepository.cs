@@ -1,51 +1,62 @@
+using Microsoft.EntityFrameworkCore;
 using TaskManagment.Domain.Models;
+using TaskManagment.Infrastructure.Data;
 
 namespace TaskManagment.Infrastructure.Repostories
 {
     public class TaskRepository
     {
-        private readonly List<TaskItem> _tasks = new();
+        private readonly ApplicationDbContext _context;
 
-        public TaskItem Create(TaskItem task)
+        public TaskRepository(ApplicationDbContext context)
         {
-            _tasks.Add(task);
+            _context = context;
+        }
+
+        public async Task<TaskItem> Create(TaskItem task)
+        {
+            _context.TaskItems.Add(task);
+            await _context.SaveChangesAsync();
             return task;
         }
 
-        public TaskItem? GetById(Guid id)
+        public async Task<TaskItem?> GetById(Guid id)
         {
-            return _tasks.FirstOrDefault(t => t.Id == id);
+            return await _context.TaskItems.FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public IEnumerable<TaskItem> GetAll()
+        public async Task<IEnumerable<TaskItem>> GetAll()
         {
-            return _tasks;
+            return await _context.TaskItems.ToListAsync();
         }
 
-        public IEnumerable<TaskItem> GetByUserId(Guid userId)
+        public async Task<IEnumerable<TaskItem>> GetByUserId(Guid userId)
         {
-            return _tasks.Where(t => t.UserId == userId);
+            return await _context.TaskItems.Where(t => t.UserId == userId).ToListAsync();
         }
 
-        public TaskItem Update(TaskItem task)
+        public async Task<TaskItem?> Update(TaskItem task)
         {
-            var existing = GetById(task.Id);
+            var existing = await GetById(task.Id);
             if (existing != null)
             {
                 existing.Title = task.Title;
                 existing.Description = task.Description;
                 existing.Status = task.Status;
                 existing.Priority = task.Priority;
+                await _context.SaveChangesAsync();
+                return existing;
             }
-            return existing ?? task;
+            return null;
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            var task = GetById(id);
+            var task = await GetById(id);
             if (task != null)
             {
-                _tasks.Remove(task);
+                _context.TaskItems.Remove(task);
+                await _context.SaveChangesAsync();
             }
         }
     }

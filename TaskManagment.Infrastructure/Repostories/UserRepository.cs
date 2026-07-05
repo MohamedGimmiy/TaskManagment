@@ -1,51 +1,62 @@
+using Microsoft.EntityFrameworkCore;
 using TaskManagment.Domain.Models;
+using TaskManagment.Infrastructure.Data;
 
 namespace TaskManagment.Infrastructure.Repostories
 {
     public class UserRepository
     {
-        private readonly List<User> _users = new();
+        private readonly ApplicationDbContext _context;
 
-        public User Create(User user)
+        public UserRepository(ApplicationDbContext context)
         {
-            _users.Add(user);
+            _context = context;
+        }
+
+        public async Task<User> Create(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
             return user;
         }
 
-        public User? GetById(Guid id)
+        public async Task<User?> GetById(Guid id)
         {
-            return _users.FirstOrDefault(u => u.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
-        public User? GetByEmail(string email)
+        public async Task<User?> GetByEmail(string email)
         {
-            return _users.FirstOrDefault(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll()
         {
-            return _users;
+            return await _context.Users.ToListAsync();
         }
 
-        public User Update(User user)
+        public async Task<User?> Update(User user)
         {
-            var existing = GetById(user.Id);
+            var existing = await GetById(user.Id);
             if (existing != null)
             {
                 existing.Name = user.Name;
                 existing.Email = user.Email;
                 existing.Password = user.Password;
                 existing.Role = user.Role;
+                await _context.SaveChangesAsync();
+                return existing;
             }
-            return existing ?? user;
+            return null;
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            var user = GetById(id);
+            var user = await GetById(id);
             if (user != null)
             {
-                _users.Remove(user);
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
             }
         }
     }

@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TaskManagment.Infrastructure.Data;
 
 namespace TaskManagment
 {
@@ -15,6 +17,10 @@ namespace TaskManagment
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // Configure Database
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Configure JWT Authentication
             var key = builder.Configuration["Jwt:Key"];
@@ -56,6 +62,12 @@ namespace TaskManagment
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Seed database
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                await DatabaseSeeder.SeedAdminUser(context);
+            }
 
             app.MapControllers();
 

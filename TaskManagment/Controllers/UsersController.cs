@@ -19,16 +19,16 @@ namespace TaskManagment.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userRepository.GetAll();
+            var users = await _userRepository.GetAll();
             return Ok(users.Select(u => new { u.Id, u.Name, u.Email, u.Role, u.CreatedAt }));
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var user = _userRepository.GetById(id);
+            var user = await _userRepository.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -47,9 +47,9 @@ namespace TaskManagment.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id, [FromBody] UpdateUserRequest request)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserRequest request)
         {
-            var user = _userRepository.GetById(id);
+            var user = await _userRepository.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -72,21 +72,21 @@ namespace TaskManagment.Controllers
                 user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
             }
 
-            var updatedUser = _userRepository.Update(user);
+            var updatedUser = await _userRepository.Update(user);
             return Ok(new { updatedUser.Id, updatedUser.Name, updatedUser.Email, updatedUser.Role, updatedUser.CreatedAt });
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public IActionResult Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var user = _userRepository.GetById(id);
+            var user = await _userRepository.GetById(id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            _userRepository.Delete(id);
+            await _userRepository.Delete(id);
             return NoContent();
         }
     }
