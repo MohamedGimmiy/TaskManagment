@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TaskManagment.Infrastructure.Data;
+using TaskManagment.Infrastructure.Repostories;
 
 namespace TaskManagment
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,10 @@ namespace TaskManagment
             // Configure Database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Register repositories
+            builder.Services.AddScoped<UserRepository>();
+            builder.Services.AddScoped<TaskRepository>();
 
             // Configure JWT Authentication
             var key = builder.Configuration["Jwt:Key"];
