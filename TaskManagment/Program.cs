@@ -63,6 +63,7 @@ namespace TaskManagment
             // Register repositories
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+            builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             // Register services
             builder.Services.AddScoped<IUserService, UserService>();

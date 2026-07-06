@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using TaskManagment.Domain.Models;
 using TaskManagment.Domain.RepositoryContracts;
@@ -13,11 +14,16 @@ namespace TaskManagment.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IRefreshTokenRepository _refreshTokenRepository;
         private readonly IConfiguration _configuration;
 
-        public AuthController(IUserRepository userRepository, IConfiguration configuration)
+        public AuthController(
+            IUserRepository userRepository,
+            IRefreshTokenRepository refreshTokenRepository,
+            IConfiguration configuration)
         {
             _userRepository = userRepository;
+            _refreshTokenRepository = refreshTokenRepository;
             _configuration = configuration;
         }
 
@@ -53,9 +59,46 @@ namespace TaskManagment.Controllers
                 return Unauthorized("Invalid email or password");
             }
 
-            var token = GenerateJwtToken(user);
+            var accessToken = GenerateJwtToken(user);
+            var refreshToken = await GenerateRefreshToken(user.Id);
 
-            return Ok(new { token, user = new { user.Id, user.Name, user.Email, user.Role } });
+            return Ok(new
+            {
+                accessToken,
+                refreshToken = refreshToken.Token,
+                expiresIn = int.Parse(_configuration["Jwt:AccessTokenExpiryMinutes"] ?? "15") * 60,
+                user = new { user.Id, user.Name, user.Email, user.Role }
+            });
+        }
+
+        [HttpPost("refresh")]
+        public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
+        {
+            var existingToken = await _refreshTokenRepository.GetByToken(request.RefreshToken);
+
+            if (existingToken == null || existingToken.IsRevoked || existingToken.ExpiresAt < DateTime.UtcNow)
+            {
+                return Unauthorized("Invalid or expired refresh token");
+            }
+
+            await _refreshTokenRepository.Revoke(existingToken.Id);
+
+            var user = await _userRepository.GetById(existingToken.UserId);
+            if (user == null)
+            {
+                return Unauthorized("User not found");
+            }
+
+            var accessToken = GenerateJwtToken(user);
+            var newRefreshToken = await GenerateRefreshToken(user.Id);
+
+            return Ok(new
+            {
+                accessToken,
+                refreshToken = newRefreshToken.Token,
+                expiresIn = int.Parse(_configuration["Jwt:AccessTokenExpiryMinutes"] ?? "15") * 60,
+                user = new { user.Id, user.Name, user.Email, user.Role }
+            });
         }
 
         private string GenerateJwtToken(User user)
@@ -63,6 +106,7 @@ namespace TaskManagment.Controllers
             var key = _configuration["Jwt:Key"] ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLong!";
             var issuer = _configuration["Jwt:Issuer"] ?? "TaskManagmentAPI";
             var audience = _configuration["Jwt:Audience"] ?? "TaskManagmentClient";
+            var expiryMinutes = int.Parse(_configuration["Jwt:AccessTokenExpiryMinutes"] ?? "15");
 
             var claims = new[]
             {
@@ -81,11 +125,27 @@ namespace TaskManagment.Controllers
                 issuer: issuer,
                 audience: audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddHours(24),
+                expires: DateTime.UtcNow.AddMinutes(expiryMinutes),
                 signingCredentials: credentials
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private async Task<RefreshToken> GenerateRefreshToken(Guid userId)
+        {
+            var expiryDays = int.Parse(_configuration["Jwt:RefreshTokenExpiryDays"] ?? "7");
+
+            var refreshToken = new RefreshToken
+            {
+                Id = Guid.NewGuid(),
+                Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+                UserId = userId,
+                CreatedAt = DateTime.UtcNow,
+                ExpiresAt = DateTime.UtcNow.AddDays(expiryDays)
+            };
+
+            return await _refreshTokenRepository.Create(refreshToken);
         }
     }
 
@@ -100,5 +160,10 @@ namespace TaskManagment.Controllers
     {
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
+    }
+
+    public class RefreshRequest
+    {
+        public string RefreshToken { get; set; } = string.Empty;
     }
 }
