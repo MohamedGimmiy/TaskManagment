@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagment.Domain.Models;
-using TaskManagment.Infrastructure.Repostories;
+using TaskManagment.Domain.RepositoryContracts;
 
 namespace TaskManagment.Controllers
 {
@@ -10,9 +10,9 @@ namespace TaskManagment.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
-        private readonly UserRepository _userRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(UserRepository userRepository)
+        public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }

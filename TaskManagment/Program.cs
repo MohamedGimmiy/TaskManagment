@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using TaskManagment.Domain.RepositoryContracts;
+using TaskManagment.Domain.Services;
+using TaskManagment.Domain.ServicesContract;
 using TaskManagment.Infrastructure.Data;
 using TaskManagment.Infrastructure.Repostories;
-using TaskManagment.Infrastructure.Services;
 
 namespace TaskManagment
 {
@@ -51,8 +53,8 @@ namespace TaskManagment
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Register repositories
-            builder.Services.AddScoped<UserRepository>();
-            builder.Services.AddScoped<TaskRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
             // Register background processing services
             builder.Services.AddSingleton<ITaskProcessingQueue, TaskProcessingQueue>();

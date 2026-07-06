@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManagment.Domain.Models;
+using TaskManagment.Domain.RepositoryContracts;
 using TaskManagment.Infrastructure.Data;
 
 namespace TaskManagment.Infrastructure.Repostories
 {
-    public class TaskRepository
+    public class TaskRepository : ITaskRepository
     {
         private readonly ApplicationDbContext _context;
 

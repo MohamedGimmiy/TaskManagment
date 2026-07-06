@@ -1,14 +1,8 @@
 using System.Collections.Concurrent;
-using TaskManagment.Domain.Models;
+using TaskManagment.Domain.ServicesContract;
 
-namespace TaskManagment.Infrastructure.Services
+namespace TaskManagment.Domain.Services
 {
-    public interface ITaskProcessingQueue
-    {
-        void EnqueueTask(Guid taskId);
-        Task<Guid?> DequeueTask(CancellationToken cancellationToken);
-    }
-
     public class TaskProcessingQueue : ITaskProcessingQueue
     {
         private readonly ConcurrentQueue<Guid> _taskQueue = new();
@@ -20,7 +14,7 @@ namespace TaskManagment.Infrastructure.Services
             _signal.Release();
         }
 
-        public async Task<Guid?> DequeueTask(CancellationToken cancellationToken)
+        public async Task<Guid?> DequeueTask(System.Threading.CancellationToken cancellationToken)
         {
             await _signal.WaitAsync(cancellationToken).ConfigureAwait(false);
             if (_taskQueue.TryDequeue(out var taskId))

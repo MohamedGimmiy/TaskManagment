@@ -3,10 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TaskManagment.Domain.Models;
-using TaskManagment.Infrastructure.Data;
+using TaskManagment.Domain.ServicesContract;
 using TaskStatus = TaskManagment.Domain.Models.TaskStatus;
 
-namespace TaskManagment.Infrastructure.Services
+namespace TaskManagment.Domain.Services
 {
     public class TaskBackgroundService : BackgroundService
     {
@@ -55,9 +55,9 @@ namespace TaskManagment.Infrastructure.Services
         private async Task ProcessTaskAsync(Guid taskId, CancellationToken cancellationToken)
         {
             using var scope = _serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var context = scope.ServiceProvider.GetRequiredService<DbContext>();
             
-            var task = await context.TaskItems.FirstOrDefaultAsync(t => t.Id == taskId, cancellationToken);
+            var task = await context.Set<TaskItem>().FirstOrDefaultAsync(t => t.Id == taskId, cancellationToken);
             
             if (task == null)
             {

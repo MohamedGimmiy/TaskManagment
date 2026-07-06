@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManagment.Domain.Models;
-using TaskManagment.Infrastructure.Repostories;
-using TaskManagment.Infrastructure.Services;
+using TaskManagment.Domain.RepositoryContracts;
+using TaskManagment.Domain.ServicesContract;
 using TaskStatus = TaskManagment.Domain.Models.TaskStatus;
 
 namespace TaskManagment.Controllers
@@ -13,10 +13,10 @@ namespace TaskManagment.Controllers
     [Authorize]
     public class TasksController : ControllerBase
     {
-        private readonly TaskRepository _taskRepository;
+        private readonly ITaskRepository _taskRepository;
         private readonly ITaskProcessingQueue _taskQueue;
 
-        public TasksController(TaskRepository taskRepository, ITaskProcessingQueue taskQueue)
+        public TasksController(ITaskRepository taskRepository, ITaskProcessingQueue taskQueue)
         {
             _taskRepository = taskRepository;
             _taskQueue = taskQueue;
