@@ -42,7 +42,14 @@ namespace TaskManagment.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var currentUserId = Guid.Parse(User.FindFirst(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub)?.Value ?? string.Empty);
+            var userIdString = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                ?? User.FindFirst(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub)?.Value;
+
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out var currentUserId))
+            {
+                return Unauthorized("User ID not found or invalid in token.");
+            }
+
             var currentUserRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
             var user = await _userService.GetUserById(id, currentUserId, currentUserRole ?? "");
