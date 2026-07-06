@@ -56,6 +56,10 @@ namespace TaskManagment
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ITaskRepository, TaskRepository>();
 
+            // Register services
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<ITaskService, TaskService>();
+
             // Register background processing services
             builder.Services.AddSingleton<ITaskProcessingQueue, TaskProcessingQueue>();
             builder.Services.AddHostedService<TaskBackgroundService>();

@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using TaskManagment.Domain.Models;
-using TaskManagment.Domain.RepositoryContracts;
 using TaskManagment.Domain.ServicesContract;
 using TaskStatus = TaskManagment.Domain.Models.TaskStatus;
 
@@ -13,12 +11,12 @@ namespace TaskManagment.Controllers
     [Authorize]
     public class TasksController : ControllerBase
     {
-        private readonly ITaskRepository _taskRepository;
+        private readonly ITaskService _taskService;
         private readonly ITaskProcessingQueue _taskQueue;
 
-        public TasksController(ITaskRepository taskRepository, ITaskProcessingQueue taskQueue)
+        public TasksController(ITaskService taskService, ITaskProcessingQueue taskQueue)
         {
-            _taskRepository = taskRepository;
+            _taskService = taskService;
             _taskQueue = taskQueue;
         }
 
@@ -33,20 +31,7 @@ namespace TaskManagment.Controllers
                 return Unauthorized("User ID not found or invalid in token.");
             }
 
-            var task = new TaskItem
-            {
-                Id = Guid.NewGuid(),
-                Title = request.Title,
-                Description = request.Description ?? string.Empty,
-                Status = TaskStatus.Pending,
-                Priority = request.Priority ?? "Medium",
-                CreatedAt = DateTime.UtcNow,
-                UserId = userId
-            };
-
-            await _taskRepository.Create(task);
-
-            // Enqueue task for background processing
+            var task = await _taskService.CreateTask(userId, request.Title, request.Description, request.Priority);
             _taskQueue.EnqueueTask(task.Id);
 
             return Ok(new { task.Id, task.Title, task.Description, task.Status, task.Priority, task.CreatedAt });
@@ -64,16 +49,16 @@ namespace TaskManagment.Controllers
             }
 
             var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
+            var task = await _taskService.GetTaskById(id, userId, currentUserRole ?? "");
 
-            var task = await _taskRepository.GetById(id);
             if (task == null)
             {
+                var exists = await _taskService.GetTaskById(id, Guid.Empty, "Admin");
+                if (exists != null)
+                {
+                    return Forbid();
+                }
                 return NotFound();
-            }
-
-            if (currentUserRole != "Admin" && task.UserId != userId)
-            {
-                return Forbid();
             }
 
             return Ok(new { task.Id, task.Title, task.Description, task.Status, task.Priority, task.CreatedAt });
@@ -91,16 +76,7 @@ namespace TaskManagment.Controllers
             }
 
             var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
-
-            IEnumerable<TaskItem> tasks;
-            if (currentUserRole == "Admin")
-            {
-                tasks = await _taskRepository.GetAll();
-            }
-            else
-            {
-                tasks = await _taskRepository.GetByUserId(userId);
-            }
+            var tasks = await _taskService.GetUserTasks(userId, currentUserRole ?? "");
 
             return Ok(tasks.Select(t => new { t.Id, t.Title, t.Description, t.Status, t.Priority, t.CreatedAt }));
         }
@@ -118,25 +94,20 @@ namespace TaskManagment.Controllers
 
             var currentUserRole = User.FindFirst(ClaimTypes.Role)?.Value;
 
-            var task = await _taskRepository.GetById(id);
-            if (task == null)
-            {
-                return NotFound();
-            }
-
-            if (currentUserRole != "Admin" && task.UserId != userId)
-            {
-                return Forbid();
-            }
-
             if (!Enum.TryParse<TaskStatus>(request.Status, true, out var newStatus))
             {
                 return BadRequest($"Invalid status. Valid values: {string.Join(", ", Enum.GetNames<TaskStatus>())}");
             }
 
-            var updated = await _taskRepository.UpdateStatus(id, newStatus);
+            var updated = await _taskService.UpdateTaskStatus(id, newStatus, userId, currentUserRole ?? "");
+
             if (updated == null)
             {
+                var exists = await _taskService.GetTaskById(id, Guid.Empty, "Admin");
+                if (exists != null)
+                {
+                    return Forbid();
+                }
                 return NotFound();
             }
 
