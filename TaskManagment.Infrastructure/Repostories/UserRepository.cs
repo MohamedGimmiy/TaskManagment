@@ -23,17 +23,17 @@ namespace TaskManagment.Infrastructure.Repostories
 
         public async Task<User?> GetById(Guid id)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id && !u.IsDeleted);
         }
 
         public async Task<User?> GetByEmail(string email)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && !u.IsDeleted);
         }
 
         public async Task<IEnumerable<User>> GetAll()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Where(u => !u.IsDeleted).ToListAsync();
         }
 
         public async Task<User?> Update(User user)
@@ -53,10 +53,10 @@ namespace TaskManagment.Infrastructure.Repostories
 
         public async Task Delete(Guid id)
         {
-            var user = await GetById(id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id && !u.IsDeleted);
             if (user != null)
             {
-                _context.Users.Remove(user);
+                user.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
         }

@@ -27,6 +27,7 @@ namespace TaskManagment.Infrastructure.Data
                 entity.Property(e => e.Password).IsRequired();
                 entity.Property(e => e.Role).IsRequired();
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(e => e.IsDeleted).HasDefaultValue(false);
             });
 
             // Configure TaskItem entity
