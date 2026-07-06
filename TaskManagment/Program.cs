@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Text;
 using TaskManagment.Domain.RepositoryContracts;
 using TaskManagment.Domain.Services;
@@ -15,7 +16,24 @@ namespace TaskManagment
     {
         public static async Task Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            var logDir = Path.Combine(Directory.GetCurrentDirectory(), "logging");
+            Directory.CreateDirectory(logDir);
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .WriteTo.Console()
+                .WriteTo.File(
+                    path: Path.Combine(logDir, "log-.txt"),
+                    rollingInterval: RollingInterval.Day,
+                    retainedFileCountLimit: 30,
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}")
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("Starting web application");
+                var builder = WebApplication.CreateBuilder(args);
+                builder.Host.UseSerilog();
 
             // Add services to the container.
 
@@ -122,7 +140,16 @@ namespace TaskManagment
 
             app.MapControllers();
 
-            app.Run();
+            await app.RunAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
     }
 }

@@ -1,0 +1,36 @@
+2026-07-06 21:04:20.774 +03:00 [INF] Starting web application
+2026-07-06 21:04:23.096 +03:00 [INF] Executed DbCommand (31ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = N'admin@example.com'
+2026-07-06 21:04:23.327 +03:00 [INF] User profile is available. Using 'C:\Users\moham\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-06 21:04:23.340 +03:00 [INF] Task Background Service is starting.
+2026-07-06 21:04:23.570 +03:00 [INF] Now listening on: https://localhost:7281
+2026-07-06 21:04:23.572 +03:00 [INF] Now listening on: http://localhost:5182
+2026-07-06 21:04:23.629 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-06 21:04:23.631 +03:00 [INF] Hosting environment: Development
+2026-07-06 21:04:23.632 +03:00 [INF] Content root path: C:\Users\moham\source\repos\TaskManagment\TaskManagment
+2026-07-06 21:04:24.504 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-06 21:04:24.504 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_vs/browserLink - null null
+2026-07-06 21:04:24.543 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - 200 16519 application/javascript; charset=utf-8 49.2882ms
+2026-07-06 21:04:24.590 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_vs/browserLink - 200 null text/javascript; charset=UTF-8 97.5842ms
+2026-07-06 21:04:24.637 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - null null
+2026-07-06 21:04:24.700 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 62.8074ms
+2026-07-06 21:05:39.129 +03:00 [INF] Starting web application
+2026-07-06 21:05:41.701 +03:00 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = N'admin@example.com'
+2026-07-06 21:05:41.906 +03:00 [INF] User profile is available. Using 'C:\Users\moham\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-06 21:05:41.918 +03:00 [INF] Task Background Service is starting.
+2026-07-06 21:05:42.133 +03:00 [INF] Now listening on: https://localhost:7281
+2026-07-06 21:05:42.135 +03:00 [INF] Now listening on: http://localhost:5182
+2026-07-06 21:05:42.323 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-06 21:05:42.324 +03:00 [INF] Hosting environment: Development
+2026-07-06 21:05:42.325 +03:00 [INF] Content root path: C:\Users\moham\source\repos\TaskManagment\TaskManagment
+2026-07-06 21:05:42.811 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_vs/browserLink - null null
+2026-07-06 21:05:42.811 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-06 21:05:42.894 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - 200 16519 application/javascript; charset=utf-8 93.0728ms
+2026-07-06 21:05:42.974 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_vs/browserLink - 200 null text/javascript; charset=UTF-8 175.8301ms
+2026-07-06 21:05:43.035 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - null null
+2026-07-06 21:05:43.102 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 66.8854ms
