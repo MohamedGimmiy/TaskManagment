@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using System.Text;
 using TaskManagment.Infrastructure.Data;
 using TaskManagment.Infrastructure.Repostories;
+using TaskManagment.Infrastructure.Services;
 
 namespace TaskManagment
 {
@@ -52,6 +53,10 @@ namespace TaskManagment
             // Register repositories
             builder.Services.AddScoped<UserRepository>();
             builder.Services.AddScoped<TaskRepository>();
+
+            // Register background processing services
+            builder.Services.AddSingleton<ITaskProcessingQueue, TaskProcessingQueue>();
+            builder.Services.AddHostedService<TaskBackgroundService>();
 
             // Configure JWT Authentication
             var key = builder.Configuration["Jwt:Key"];

@@ -1,0 +1,33 @@
+using System.Collections.Concurrent;
+using TaskManagment.Domain.Models;
+
+namespace TaskManagment.Infrastructure.Services
+{
+    public interface ITaskProcessingQueue
+    {
+        void EnqueueTask(Guid taskId);
+        Task<Guid?> DequeueTask(CancellationToken cancellationToken);
+    }
+
+    public class TaskProcessingQueue : ITaskProcessingQueue
+    {
+        private readonly ConcurrentQueue<Guid> _taskQueue = new();
+        private readonly SemaphoreSlim _signal = new(0);
+
+        public void EnqueueTask(Guid taskId)
+        {
+            _taskQueue.Enqueue(taskId);
+            _signal.Release();
+        }
+
+        public async Task<Guid?> DequeueTask(CancellationToken cancellationToken)
+        {
+            await _signal.WaitAsync(cancellationToken).ConfigureAwait(false);
+            if (_taskQueue.TryDequeue(out var taskId))
+            {
+                return taskId;
+            }
+            return null;
+        }
+    }
+}

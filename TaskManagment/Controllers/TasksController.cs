@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskManagment.Domain.Models;
 using TaskManagment.Infrastructure.Repostories;
+using TaskManagment.Infrastructure.Services;
 using TaskStatus = TaskManagment.Domain.Models.TaskStatus;
 
 namespace TaskManagment.Controllers
@@ -13,10 +14,12 @@ namespace TaskManagment.Controllers
     public class TasksController : ControllerBase
     {
         private readonly TaskRepository _taskRepository;
+        private readonly ITaskProcessingQueue _taskQueue;
 
-        public TasksController(TaskRepository taskRepository)
+        public TasksController(TaskRepository taskRepository, ITaskProcessingQueue taskQueue)
         {
             _taskRepository = taskRepository;
+            _taskQueue = taskQueue;
         }
 
         [HttpPost]
@@ -42,6 +45,9 @@ namespace TaskManagment.Controllers
             };
 
             await _taskRepository.Create(task);
+
+            // Enqueue task for background processing
+            _taskQueue.EnqueueTask(task.Id);
 
             return Ok(new { task.Id, task.Title, task.Description, task.Status, task.Priority, task.CreatedAt });
         }
