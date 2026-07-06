@@ -51,6 +51,7 @@ namespace TaskManagment
             // Configure Database
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<DbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
             // Register repositories
             builder.Services.AddScoped<IUserRepository, UserRepository>();
