@@ -31,10 +31,17 @@ namespace TaskManagment.Controllers
                 return Unauthorized("User ID not found or invalid in token.");
             }
 
-            var task = await _taskService.CreateTask(userId, request.Title, request.Description, request.Priority);
-            _taskQueue.EnqueueTask(task.Id);
+            try
+            {
+                var task = await _taskService.CreateTask(userId, request.Title, request.Description, request.Priority);
+                _taskQueue.EnqueueTask(task.Id);
 
-            return Ok(new { task.Id, task.Title, task.Description, task.Status, task.Priority, task.CreatedAt });
+                return Ok(new { task.Id, task.Title, task.Description, task.Status, task.Priority, task.CreatedAt });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]

@@ -23,6 +23,18 @@ namespace TaskManagment.Domain.Services
 
         public async Task<TaskItem> CreateTask(Guid userId, string title, string? description, int priority = 2)
         {
+            var todayStart = DateTime.UtcNow.Date;
+            var existingTasks = await _taskRepository.GetByUserId(userId);
+            var duplicate = existingTasks.Any(t =>
+                t.Title == title &&
+                t.CreatedAt >= todayStart &&
+                t.CreatedAt < todayStart.AddDays(1));
+
+            if (duplicate)
+            {
+                throw new InvalidOperationException("A task with this title already exists for today.");
+            }
+
             var task = new TaskItem
             {
                 Id = Guid.NewGuid(),
