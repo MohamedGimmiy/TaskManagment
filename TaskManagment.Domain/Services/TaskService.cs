@@ -21,7 +21,7 @@ namespace TaskManagment.Domain.Services
             _logger = logger;
         }
 
-        public async Task<TaskItem> CreateTask(Guid userId, string title, string? description, string? priority)
+        public async Task<TaskItem> CreateTask(Guid userId, string title, string? description, int priority = 2)
         {
             var task = new TaskItem
             {
@@ -29,7 +29,7 @@ namespace TaskManagment.Domain.Services
                 Title = title,
                 Description = description ?? string.Empty,
                 Status = TaskStatus.Pending,
-                Priority = priority ?? "Medium",
+                Priority = priority,
                 CreatedAt = DateTime.UtcNow,
                 UserId = userId
             };
@@ -80,12 +80,18 @@ namespace TaskManagment.Domain.Services
 
         public async Task<IEnumerable<TaskItem>> GetUserTasks(Guid currentUserId, string currentUserRole)
         {
+            IEnumerable<TaskItem> tasks;
+
             if (currentUserRole == "Admin")
             {
-                return await _taskRepository.GetAll();
+                tasks = await _taskRepository.GetAll();
+            }
+            else
+            {
+                tasks = await _taskRepository.GetByUserId(currentUserId);
             }
 
-            return await _taskRepository.GetByUserId(currentUserId);
+            return tasks.OrderBy(t => t.Priority).ThenBy(t => t.CreatedAt);
         }
 
         public async Task<TaskItem?> UpdateTaskStatus(Guid taskId, TaskStatus newStatus, Guid currentUserId, string currentUserRole)

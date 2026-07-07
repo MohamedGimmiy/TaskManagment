@@ -1,0 +1,76 @@
+2026-07-07 10:16:29.143 +03:00 [INF] Starting web application
+2026-07-07 10:16:30.141 +03:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at TaskManagment.Program.Main(String[] args) in C:\Users\moham\source\repos\TaskManagment\TaskManagment\Program.cs:line 120
+2026-07-07 10:20:10.695 +03:00 [INF] Starting web application
+2026-07-07 10:20:15.816 +03:00 [INF] Executed DbCommand (598ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = N'admin@example.com'
+2026-07-07 10:20:16.074 +03:00 [INF] User profile is available. Using 'C:\Users\moham\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-07 10:20:16.087 +03:00 [INF] Task Background Service is starting.
+2026-07-07 10:20:16.440 +03:00 [INF] Now listening on: https://localhost:7281
+2026-07-07 10:20:16.441 +03:00 [INF] Now listening on: http://localhost:5182
+2026-07-07 10:20:16.500 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-07 10:20:16.501 +03:00 [INF] Hosting environment: Development
+2026-07-07 10:20:16.503 +03:00 [INF] Content root path: C:\Users\moham\source\repos\TaskManagment\TaskManagment
+2026-07-07 10:20:17.589 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_vs/browserLink - null null
+2026-07-07 10:20:17.589 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-07 10:20:17.651 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - 200 16519 application/javascript; charset=utf-8 69.372ms
+2026-07-07 10:20:18.483 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_vs/browserLink - 200 null text/javascript; charset=UTF-8 902.783ms
+2026-07-07 10:20:18.526 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - null null
+2026-07-07 10:20:18.604 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 78.6848ms
+2026-07-07 10:21:37.481 +03:00 [INF] Starting web application
+2026-07-07 10:21:37.687 +03:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at TaskManagment.Program.Main(String[] args) in C:\Users\moham\source\repos\TaskManagment\TaskManagment\Program.cs:line 120
+2026-07-07 10:21:50.758 +03:00 [INF] Starting web application
+2026-07-07 10:21:50.886 +03:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at TaskManagment.Program.Main(String[] args) in C:\Users\moham\source\repos\TaskManagment\TaskManagment\Program.cs:line 120
+2026-07-07 10:22:33.880 +03:00 [INF] Starting web application
+2026-07-07 10:22:34.028 +03:00 [FTL] Application terminated unexpectedly
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at TaskManagment.Program.Main(String[] args) in C:\Users\moham\source\repos\TaskManagment\TaskManagment\Program.cs:line 120
+2026-07-07 10:26:25.753 +03:00 [INF] Starting web application
+2026-07-07 10:26:28.505 +03:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = N'admin@example.com'
+2026-07-07 10:26:28.852 +03:00 [INF] User profile is available. Using 'C:\Users\moham\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-07 10:26:28.863 +03:00 [INF] Task Background Service is starting.
+2026-07-07 10:26:29.174 +03:00 [INF] Now listening on: https://localhost:7281
+2026-07-07 10:26:29.176 +03:00 [INF] Now listening on: http://localhost:5182
+2026-07-07 10:26:29.240 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-07 10:26:29.242 +03:00 [INF] Hosting environment: Development
+2026-07-07 10:26:29.243 +03:00 [INF] Content root path: C:\Users\moham\source\repos\TaskManagment\TaskManagment
+2026-07-07 10:26:29.866 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_vs/browserLink - null null
+2026-07-07 10:26:29.866 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-07 10:26:29.912 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - 200 16519 application/javascript; charset=utf-8 49.9507ms
+2026-07-07 10:26:29.955 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_vs/browserLink - 200 null text/javascript; charset=UTF-8 97.5968ms
+2026-07-07 10:26:30.007 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - null null
+2026-07-07 10:26:30.060 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 53.8131ms

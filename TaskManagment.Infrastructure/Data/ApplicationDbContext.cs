@@ -38,7 +38,7 @@ namespace TaskManagment.Infrastructure.Data
                 entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
                 entity.Property(e => e.Description).HasMaxLength(1000);
                 entity.Property(e => e.Status).IsRequired();
-                entity.Property(e => e.Priority).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Priority).IsRequired().HasDefaultValue(2);
                 entity.Property(e => e.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(e => e.UserId).IsRequired();
 

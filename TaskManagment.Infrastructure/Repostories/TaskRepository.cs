@@ -28,12 +28,12 @@ namespace TaskManagment.Infrastructure.Repostories
 
         public async Task<IEnumerable<TaskItem>> GetAll()
         {
-            return await _context.TaskItems.ToListAsync();
+            return await _context.TaskItems.OrderBy(t => t.Priority).ThenBy(t => t.CreatedAt).ToListAsync();
         }
 
         public async Task<IEnumerable<TaskItem>> GetByUserId(Guid userId)
         {
-            return await _context.TaskItems.Where(t => t.UserId == userId).ToListAsync();
+            return await _context.TaskItems.Where(t => t.UserId == userId).OrderBy(t => t.Priority).ThenBy(t => t.CreatedAt).ToListAsync();
         }
 
         public async Task<TaskItem?> Update(TaskItem task)
