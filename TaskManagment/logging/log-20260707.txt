@@ -74,3 +74,164 @@ WHERE [u].[Email] = N'admin@example.com'
 2026-07-07 10:26:29.955 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_vs/browserLink - 200 null text/javascript; charset=UTF-8 97.5968ms
 2026-07-07 10:26:30.007 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - null null
 2026-07-07 10:26:30.060 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 53.8131ms
+2026-07-07 10:32:11.420 +03:00 [INF] Starting web application
+2026-07-07 10:32:13.742 +03:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = N'admin@example.com'
+2026-07-07 10:32:13.932 +03:00 [INF] User profile is available. Using 'C:\Users\moham\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-07 10:32:13.942 +03:00 [INF] Task Background Service is starting.
+2026-07-07 10:32:14.138 +03:00 [INF] Now listening on: https://localhost:7281
+2026-07-07 10:32:14.139 +03:00 [INF] Now listening on: http://localhost:5182
+2026-07-07 10:32:14.185 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-07 10:32:14.187 +03:00 [INF] Hosting environment: Development
+2026-07-07 10:32:14.188 +03:00 [INF] Content root path: C:\Users\moham\source\repos\TaskManagment\TaskManagment
+2026-07-07 10:32:14.752 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_vs/browserLink - null null
+2026-07-07 10:32:14.752 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-07 10:32:14.804 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - 200 16519 application/javascript; charset=utf-8 63.0496ms
+2026-07-07 10:32:14.852 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_vs/browserLink - 200 null text/javascript; charset=UTF-8 112.4032ms
+2026-07-07 10:32:14.898 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - null null
+2026-07-07 10:32:14.944 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 46.1001ms
+2026-07-07 10:32:45.390 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users - null null
+2026-07-07 10:32:45.518 +03:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-07-07 10:32:45.523 +03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-07-07 10:32:45.524 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users - 401 0 null 138.115ms
+2026-07-07 10:33:36.947 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users - null null
+2026-07-07 10:33:37.125 +03:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-07-07 10:33:37.128 +03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-07-07 10:33:37.131 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users - 401 0 null 184.5777ms
+2026-07-07 10:34:03.288 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7281/api/Auth/login - application/json 61
+2026-07-07 10:34:03.300 +03:00 [INF] Executing endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:34:03.323 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(TaskManagment.Controllers.LoginRequest) on controller TaskManagment.Controllers.AuthController (TaskManagment.API).
+2026-07-07 10:34:03.432 +03:00 [INF] Executed DbCommand (32ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__email_0 AND [u].[IsDeleted] = CAST(0 AS bit)
+2026-07-07 10:34:04.025 +03:00 [INF] Executed DbCommand (119ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Boolean), @p4='?' (DbType = DateTime2), @p5='?' (Size = 500), @p6='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [RefreshTokens] ([Id], [CreatedAt], [ExpiresAt], [IsRevoked], [RevokedAt], [Token], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-07 10:34:04.043 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`4[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType2`4[[System.Guid, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TaskManagment.Domain.Models.UserRole, TaskManagment.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], TaskManagment.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-07 10:34:04.065 +03:00 [INF] Executed action TaskManagment.Controllers.AuthController.Login (TaskManagment.API) in 736.5222ms
+2026-07-07 10:34:04.067 +03:00 [INF] Executed endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:34:04.071 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7281/api/Auth/login - 200 null application/json; charset=utf-8 783.2352ms
+2026-07-07 10:34:19.310 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users - null null
+2026-07-07 10:34:19.354 +03:00 [INF] Executing endpoint 'TaskManagment.Controllers.UsersController.GetAll (TaskManagment.API)'
+2026-07-07 10:34:19.359 +03:00 [INF] Route matched with {action = "GetAll", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller TaskManagment.Controllers.UsersController (TaskManagment.API).
+2026-07-07 10:34:19.416 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[IsDeleted] = CAST(0 AS bit)
+2026-07-07 10:34:19.419 +03:00 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[TaskManagment.Domain.Models.User, TaskManagment.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[<>f__AnonymousType4`5[[System.Guid, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TaskManagment.Domain.Models.UserRole, TaskManagment.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], TaskManagment.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-07 10:34:19.426 +03:00 [INF] Executed action TaskManagment.Controllers.UsersController.GetAll (TaskManagment.API) in 65.862ms
+2026-07-07 10:34:19.428 +03:00 [INF] Executed endpoint 'TaskManagment.Controllers.UsersController.GetAll (TaskManagment.API)'
+2026-07-07 10:34:19.428 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users - 200 null application/json; charset=utf-8 118.934ms
+2026-07-07 10:34:42.431 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7281/api/Auth/login - application/json 49
+2026-07-07 10:34:42.466 +03:00 [INF] Executing endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:34:42.467 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(TaskManagment.Controllers.LoginRequest) on controller TaskManagment.Controllers.AuthController (TaskManagment.API).
+2026-07-07 10:34:42.475 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__email_0 AND [u].[IsDeleted] = CAST(0 AS bit)
+2026-07-07 10:34:42.819 +03:00 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2026-07-07 10:34:42.821 +03:00 [INF] Executed action TaskManagment.Controllers.AuthController.Login (TaskManagment.API) in 352.0039ms
+2026-07-07 10:34:42.822 +03:00 [INF] Executed endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:34:42.823 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7281/api/Auth/login - 401 null text/plain; charset=utf-8 391.976ms
+2026-07-07 10:34:51.005 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7281/api/Auth/login - application/json 50
+2026-07-07 10:34:51.008 +03:00 [INF] Executing endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:34:51.009 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(TaskManagment.Controllers.LoginRequest) on controller TaskManagment.Controllers.AuthController (TaskManagment.API).
+2026-07-07 10:34:51.016 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__email_0 AND [u].[IsDeleted] = CAST(0 AS bit)
+2026-07-07 10:34:51.156 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Boolean), @p4='?' (DbType = DateTime2), @p5='?' (Size = 500), @p6='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [RefreshTokens] ([Id], [CreatedAt], [ExpiresAt], [IsRevoked], [RevokedAt], [Token], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-07 10:34:51.158 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`4[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType2`4[[System.Guid, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TaskManagment.Domain.Models.UserRole, TaskManagment.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], TaskManagment.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-07 10:34:51.160 +03:00 [INF] Executed action TaskManagment.Controllers.AuthController.Login (TaskManagment.API) in 149.3097ms
+2026-07-07 10:34:51.161 +03:00 [INF] Executed endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:34:51.162 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7281/api/Auth/login - 200 null application/json; charset=utf-8 156.9443ms
+2026-07-07 10:35:10.993 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users - null null
+2026-07-07 10:35:10.997 +03:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-07-07 10:35:11.001 +03:00 [INF] AuthenticationScheme: Bearer was forbidden.
+2026-07-07 10:35:11.002 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users - 403 0 null 9.2039ms
+2026-07-07 10:38:39.166 +03:00 [INF] Starting web application
+2026-07-07 10:38:41.079 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = N'admin@example.com'
+2026-07-07 10:38:41.242 +03:00 [INF] User profile is available. Using 'C:\Users\moham\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-07 10:38:41.253 +03:00 [INF] Task Background Service is starting.
+2026-07-07 10:38:41.475 +03:00 [INF] Now listening on: https://localhost:7281
+2026-07-07 10:38:41.477 +03:00 [INF] Now listening on: http://localhost:5182
+2026-07-07 10:38:41.601 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-07 10:38:41.602 +03:00 [INF] Hosting environment: Development
+2026-07-07 10:38:41.603 +03:00 [INF] Content root path: C:\Users\moham\source\repos\TaskManagment\TaskManagment
+2026-07-07 10:38:42.087 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-07 10:38:42.087 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/_vs/browserLink - null null
+2026-07-07 10:38:42.139 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_framework/aspnetcore-browser-refresh.js - 200 16519 application/javascript; charset=utf-8 60.9896ms
+2026-07-07 10:38:42.201 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/_vs/browserLink - 200 null text/javascript; charset=UTF-8 125.3055ms
+2026-07-07 10:38:42.248 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - null null
+2026-07-07 10:38:42.313 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 64.6144ms
+2026-07-07 10:38:56.572 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users - null null
+2026-07-07 10:38:56.636 +03:00 [INF] Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-07-07 10:38:56.643 +03:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-07-07 10:38:56.644 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users - 401 null application/json 72.5021ms
+2026-07-07 10:39:35.849 +03:00 [INF] Request starting HTTP/2 POST https://localhost:7281/api/Auth/login - application/json 50
+2026-07-07 10:39:35.865 +03:00 [INF] Executing endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:39:35.881 +03:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(TaskManagment.Controllers.LoginRequest) on controller TaskManagment.Controllers.AuthController (TaskManagment.API).
+2026-07-07 10:39:35.982 +03:00 [INF] Executed DbCommand (23ms) [Parameters=[@__email_0='?' (Size = 255)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__email_0 AND [u].[IsDeleted] = CAST(0 AS bit)
+2026-07-07 10:39:36.432 +03:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Boolean), @p4='?' (DbType = DateTime2), @p5='?' (Size = 500), @p6='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [RefreshTokens] ([Id], [CreatedAt], [ExpiresAt], [IsRevoked], [RevokedAt], [Token], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-07 10:39:36.447 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`4[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType2`4[[System.Guid, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TaskManagment.Domain.Models.UserRole, TaskManagment.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], TaskManagment.API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-07 10:39:36.466 +03:00 [INF] Executed action TaskManagment.Controllers.AuthController.Login (TaskManagment.API) in 579.9857ms
+2026-07-07 10:39:36.468 +03:00 [INF] Executed endpoint 'TaskManagment.Controllers.AuthController.Login (TaskManagment.API)'
+2026-07-07 10:39:36.472 +03:00 [INF] Request finished HTTP/2 POST https://localhost:7281/api/Auth/login - 200 null application/json; charset=utf-8 623.9766ms
+2026-07-07 10:39:55.860 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users - null null
+2026-07-07 10:39:55.918 +03:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-07-07 10:39:55.922 +03:00 [INF] AuthenticationScheme: Bearer was forbidden.
+2026-07-07 10:39:55.923 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users - 403 null application/json 63.1273ms
+2026-07-07 10:40:04.364 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users/profile - null null
+2026-07-07 10:40:04.368 +03:00 [INF] Executing endpoint 'TaskManagment.Controllers.UsersController.GetProfile (TaskManagment.API)'
+2026-07-07 10:40:04.372 +03:00 [INF] Route matched with {action = "GetProfile", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetProfile() on controller TaskManagment.Controllers.UsersController (TaskManagment.API).
+2026-07-07 10:40:04.425 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__id_0 AND [u].[IsDeleted] = CAST(0 AS bit)
+2026-07-07 10:40:04.429 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType5`5[[System.Guid, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TaskManagment.Domain.Models.UserRole, TaskManagment.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-07 10:40:04.434 +03:00 [INF] Executed action TaskManagment.Controllers.UsersController.GetProfile (TaskManagment.API) in 61.0269ms
+2026-07-07 10:40:04.436 +03:00 [INF] Executed endpoint 'TaskManagment.Controllers.UsersController.GetProfile (TaskManagment.API)'
+2026-07-07 10:40:04.437 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users/profile - 200 null application/json; charset=utf-8 73.0994ms
+2026-07-07 10:40:15.553 +03:00 [INF] Request starting HTTP/2 DELETE https://localhost:7281/api/Users/6d137d0c-81e6-48e4-b013-f49e6da901fc - null null
+2026-07-07 10:40:15.559 +03:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin)
+2026-07-07 10:40:15.560 +03:00 [INF] AuthenticationScheme: Bearer was forbidden.
+2026-07-07 10:40:15.561 +03:00 [INF] Request finished HTTP/2 DELETE https://localhost:7281/api/Users/6d137d0c-81e6-48e4-b013-f49e6da901fc - 403 null application/json 8.4597ms
+2026-07-07 10:40:27.459 +03:00 [INF] Request starting HTTP/2 GET https://localhost:7281/api/Users/6d137d0c-81e6-48e4-b013-f49e6da901fc - null null
+2026-07-07 10:40:27.463 +03:00 [INF] Executing endpoint 'TaskManagment.Controllers.UsersController.GetById (TaskManagment.API)'
+2026-07-07 10:40:27.468 +03:00 [INF] Route matched with {action = "GetById", controller = "Users"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetById(System.Guid) on controller TaskManagment.Controllers.UsersController (TaskManagment.API).
+2026-07-07 10:40:27.478 +03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[IsDeleted], [u].[Name], [u].[Password], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Id] = @__id_0 AND [u].[IsDeleted] = CAST(0 AS bit)
+2026-07-07 10:40:27.479 +03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType5`5[[System.Guid, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TaskManagment.Domain.Models.UserRole, TaskManagment.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-07 10:40:27.480 +03:00 [INF] Executed action TaskManagment.Controllers.UsersController.GetById (TaskManagment.API) in 10.5522ms
+2026-07-07 10:40:27.482 +03:00 [INF] Executed endpoint 'TaskManagment.Controllers.UsersController.GetById (TaskManagment.API)'
+2026-07-07 10:40:27.484 +03:00 [INF] Request finished HTTP/2 GET https://localhost:7281/api/Users/6d137d0c-81e6-48e4-b013-f49e6da901fc - 200 null application/json; charset=utf-8 24.7049ms

@@ -58,7 +58,7 @@ namespace TaskManagment.Controllers
             {
                 if (await _userService.GetUserById(id, Guid.Empty, "Admin") != null)
                 {
-                    return Forbid();
+                    return StatusCode(403, new { message = "You are not authorized to view this user." });
                 }
                 return NotFound();
             }

@@ -63,7 +63,7 @@ namespace TaskManagment.Controllers
                 var exists = await _taskService.GetTaskById(id, Guid.Empty, "Admin");
                 if (exists != null)
                 {
-                    return Forbid();
+                    return StatusCode(403, new { message = "You are not authorized to view this task." });
                 }
                 return NotFound();
             }
@@ -113,7 +113,7 @@ namespace TaskManagment.Controllers
                 var exists = await _taskService.GetTaskById(id, Guid.Empty, "Admin");
                 if (exists != null)
                 {
-                    return Forbid();
+                    return StatusCode(403, new { message = "You are not authorized to update this task." });
                 }
                 return NotFound();
             }
