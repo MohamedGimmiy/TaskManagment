@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TaskManagment.Domain\TaskManagment.Domain.csproj" />
+    <ProjectReference Include="..\TaskManagment.Domain\TaskManagment.Core.csproj" />
     <ProjectReference Include="..\TaskManagment.Infrastructure\TaskManagment.Infrastructure.csproj" />
   </ItemGroup>
 

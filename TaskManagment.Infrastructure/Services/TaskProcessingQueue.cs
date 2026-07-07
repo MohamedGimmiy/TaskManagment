@@ -1,7 +1,7 @@
 using System.Collections.Concurrent;
 using TaskManagment.Domain.ServicesContract;
 
-namespace TaskManagment.Domain.Services
+namespace TaskManagment.Infrastructure.Services
 {
     public class TaskProcessingQueue : ITaskProcessingQueue
     {

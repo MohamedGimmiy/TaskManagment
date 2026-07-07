@@ -28,7 +28,7 @@ namespace TaskManagment.Infrastructure.Repostories
 
         public async Task<User?> GetByEmail(string email)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && !u.IsDeleted);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<IEnumerable<User>> GetAll()

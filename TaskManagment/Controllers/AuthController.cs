@@ -59,6 +59,11 @@ namespace TaskManagment.Controllers
                 return Unauthorized("Invalid email or password");
             }
 
+            if (user.IsDeleted)
+            {
+                return Unauthorized("Invalid email or password");
+            }
+
             var accessToken = GenerateJwtToken(user);
             var refreshToken = await GenerateRefreshToken(user.Id);
 

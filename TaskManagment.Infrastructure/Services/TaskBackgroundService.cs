@@ -6,7 +6,7 @@ using TaskManagment.Domain.Models;
 using TaskManagment.Domain.ServicesContract;
 using TaskStatus = TaskManagment.Domain.Models.TaskStatus;
 
-namespace TaskManagment.Domain.Services
+namespace TaskManagment.Infrastructure.Services
 {
     public class TaskBackgroundService : BackgroundService
     {

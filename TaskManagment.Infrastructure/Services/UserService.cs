@@ -2,7 +2,7 @@ using TaskManagment.Domain.Models;
 using TaskManagment.Domain.RepositoryContracts;
 using TaskManagment.Domain.ServicesContract;
 
-namespace TaskManagment.Domain.Services
+namespace TaskManagment.Infrastructure.Services
 {
     public class UserService : IUserService
     {

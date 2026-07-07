@@ -5,8 +5,8 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 using TaskManagment.Domain.RepositoryContracts;
-using TaskManagment.Domain.Services;
 using TaskManagment.Domain.ServicesContract;
+using TaskManagment.Infrastructure.Services;
 using TaskManagment.Infrastructure.Data;
 using TaskManagment.Infrastructure.Repostories;
 
